@@ -7,6 +7,7 @@ const app = express();
 // Serve static files (HTML/CSS)
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/pdfs', express.static(path.join(__dirname, 'pdfs')));
 app.use('/', createRouter());
 
 // Start server
