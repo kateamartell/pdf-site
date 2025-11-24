@@ -1,0 +1,16 @@
+[
+  {
+    "filename": "document1.pdf",
+    "title": "Document 1",
+    "description": "This is the first PDF in the collection."
+  },
+  {
+    "filename": "document2.pdf",
+    "title": "Document 2",
+    "description": "This is the second PDF in the collection."
+  },
+  {
+    "filename": "document3.pdf",
+    "title": "Document 3",
+    "description": "This is the third PDF in the collection."
+  }

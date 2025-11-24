@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PDF Library</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- Header / Nav -->
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="/" class="logo">
+          📚 PDF Library
+        </a>
+        <div class="nav-links">
+          <a href="#home" class="nav-link">Home</a>
+          <a href="#pdfs" class="nav-link">PDF Collection</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content" id="home">
+    <div class="container">
+      <!-- Hero section -->
+      <section class="hero">
+        <h1>Study PDF Library</h1>
+        <p>
+          A curated collection of PDFs related to our course topic, hosted and managed
+          with a custom Express + Nginx backend.
+        </p>
+        <div class="cta-buttons">
+          <a href="#pdfs" class="btn btn-primary">View PDFs</a>
+          <a href="#about" class="btn btn-outline">Learn More</a>
+        </div>
+      </section>
+
+      <!-- PDF List -->
+      <section id="pdfs" class="mb-2">
+        <div class="card">
+          <h2 class="mb-1">Available PDFs</h2>
+          <p class="mb-1">
+            Browse the documents below. Each PDF includes a title, description,
+            and a link to view or download.
+          </p>
+          <div id="pdf-list" class="pdf-list"></div>
+        </div>
+      </section>
+
+      <!-- About section -->
+      <section id="about">
+        <div class="card">
+          <h2 class="mb-1">About This Site</h2>
+          <p>
+            This website is part of an assignment demonstrating:
+          </p>
+          <ul class="mb-1">
+            <li>Custom routing with Express</li>
+            <li>PDF discovery and validation modules</li>
+            <li>Metadata-driven PDF listings</li>
+            <li>Domain + HTTPS setup via Nginx</li>
+          </ul>
+          <p>
+            All PDFs are stored on the server and served securely after validation.
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>© 2025 PDF Library · Built with Express, Nginx, and Node.js</p>
+    </div>
+  </footer>
+
+  <!-- Script to load PDFs -->
+  <script>
+    async function loadPdfs() {
+      try {
+        const res = await fetch('/api/pdfs');
+        const pdfs = await res.json();
+
+        const container = document.getElementById('pdf-list');
+        container.innerHTML = '';
+
+        if (!Array.isArray(pdfs) || pdfs.length === 0) {
+          const alert = document.createElement('div');
+          alert.className = 'alert alert-warning';
+          alert.textContent = 'No PDFs available yet. Please check back later.';
+          container.appendChild(alert);
+          return;
+        }
+
+        pdfs.forEach(pdf => {
+          const card = document.createElement('div');
+          card.className = 'comment-card'; // uses your nice card style
+
+          card.innerHTML = `
+            <div class="comment-header">
+              <span class="author">${pdf.title}</span>
+            </div>
+            <p class="comment-text mb-1">${pdf.description}</p>
+            <a href="${pdf.url}" target="_blank" class="btn btn-outline">View / Download PDF</a>
+          `;
+
+          container.appendChild(card);
+        });
+      } catch (err) {
+        const container = document.getElementById('pdf-list');
+        container.innerHTML = '';
+        const alert = document.createElement('div');
+        alert.className = 'alert alert-error';
+        alert.textContent = 'Error loading PDFs. Please try again later.';
+        container.appendChild(alert);
+        console.error(err);
+      }
+    }
+
+    loadPdfs();
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PDF Library</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <h1>PDF Library</h1>
+    <p>A collection of study PDFs for this assignment.</p>
+  </header>
+
+  <main>
+    <h2>Available PDFs</h2>
+    <div id="pdf-list" class="pdf-list"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 PDF Library</p>
+  </footer>
+
+  <script>
+    async function loadPdfs() {
+      const res = await fetch('/api/pdfs');
+      const pdfs = await res.json();
+
+      const container = document.getElementById('pdf-list');
+      container.innerHTML = '';
+
+      pdfs.forEach(pdf => {
+        const div = document.createElement('div');
+        div.className = 'pdf-card';
+        div.innerHTML = `
+          <h3>${pdf.title}</h3>
+          <p>${pdf.description}</p>
+          <a href="${pdf.url}" target="_blank">View PDF</a>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    loadPdfs();
+  </script>
+</body>
+</html>
