@@ -1,40 +1,37 @@
+
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const { getPdfList } = require('../modules/pdfDiscovery');
-const { isValidPdf, getPdfPath } = require('../modules/pdfValidation');
 
 function createRouter() {
   const router = express.Router();
 
-  // Homepage
-  router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
-  });
-
-  // JSON PDF list (metadata)
+  // Return the list of PDFs
   router.get('/api/pdfs', (req, res) => {
-    const pdfs = getPdfList();
-    res.json(pdfs);
+    res.json(getPdfList());
   });
 
-  // Serve PDFs safely using sendFile()
+  // Serve an individual PDF with sendFile()
   router.get('/pdfs/:filename', (req, res) => {
     const filename = req.params.filename;
+    const allowed = getPdfList().find(pdf => pdf.filename === filename);
 
-    if (!isValidPdf(filename)) {
-      return res.status(404).send('PDF not found');
+    if (!allowed) {
+      return res.status(404).send('PDF not found or not allowed');
     }
 
-    const fullPath = getPdfPath(filename);
-    res.sendFile(fullPath);
-  });
+    const fullPath = path.join(__dirname, '..', 'pdfs', filename);
 
-  // 404 handler
-  router.use((req, res) => {
-    res.status(404).send('Page not found');
+    fs.access(fullPath, fs.constants.R_OK, err => {
+      if (err) return res.status(404).send('File missing');
+      res.sendFile(fullPath);
+    });
   });
 
   return router;
 }
 
 module.exports = createRouter;
+
+
