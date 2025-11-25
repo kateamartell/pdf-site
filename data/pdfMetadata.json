@@ -1,17 +1,17 @@
 [
   {
     "filename": "document1.pdf",
-    "title": "Puffins1",
-    "description": "This is the first PDF in the collection, talking about puffins!."
+    "title": "Puffins",
+    "description": "This is the first PDF in the collection, talking about puffins!"
   },
   {
     "filename": "document2.pdf",
     "title": "Icelandic Horse",
-    "description": "This is the second PDF in the collection, talking about Icelandic Horse."
+    "description": "This is the second PDF in the collection, talking about Icelandic Horse!"
   },
   {
     "filename": "document3.pdf",
     "title": "Arctic Fox",
-    "description": "This is the third PDF in the collection, talking about Artic Fox."
+    "description": "This is the third PDF in the collection, talking about Artic Fox!"
   }
 ]
