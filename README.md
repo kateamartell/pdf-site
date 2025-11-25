@@ -11,23 +11,23 @@ COS 498 Assignment
 git clone https://github.com/kateamartell/pdf-site.git <br>
 cd pdf-site <br>
 
-<br>//run locally <br>
+<br>// run locally <br>
 npm install <br>
 node server.js <br>
 
-//build docker image <br>
+// build docker image <br>
 cd ~/pdf-site <br>
 docker build -t pdf-site . <br>
 
-//run docker container locally<br>
+// run docker container locally<br>
 docker run -p 3000:3000 pdf-site<br>
 
-//deployment <br>
+// deployment <br>
 cd ~/webserver<br>
 mkdir -p nginx/data nginx/letsencrypt <br>
 docker compose up -d <br>
 
-//Update deployment <br>
+// Update deployment <br>
 cd ~/pdf-site <br>
 git pull <br>
 docker build -t pdf-site . <br>
